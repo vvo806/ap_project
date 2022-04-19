@@ -1,7 +1,6 @@
 "Making rock-paper-scissors project"
 
 import random
-import collections
 import time
 
 # Defines the winner into a list after comparing user's and computer's weapon
@@ -9,37 +8,37 @@ def results(x):
     # Respond with results when computer chooses rock
     if x == 'Rock': 
         if u_choice == 'R':
-            round.append('tie')
+            rounds.append('tie')
         elif u_choice == 'P':
-            round.append('user')
+            rounds.append('user')
         else:
-            round.append('computer')
+            rounds.append('computer')
 
     # Respond with results when computer chooses paper
-    if x == 'Paper': 
+    elif x == 'Paper': 
         if u_choice == 'R':
-            round.append('computer')
+            rounds.append('computer')
         elif u_choice == 'P':
-            round.append('tie')
+            rounds.append('tie')
         else:
-            round.append('user')
+            rounds.append('user')
 
     # Respond with results when computer chooses scissor
-    if x == 'Scissor': 
+    else: 
         if u_choice == 'R':
-            round.append('user')
+            rounds.append('user')
         elif u_choice == 'P':
-            round.append('computer')
+            rounds.append('computer')
         else:
-            round.append('tie')
+            rounds.append('tie')
 
 # List of winners per round
-round = []
+rounds = []
 
 # Introductions
 print("Welcome to The Game of Rock, Papers, Scissors!")
 print()
-print("You will be playing 3 rounds with the computer. One with most wins is the winner.")
+print("You will be playing as many rounds as you like with the computer. One with most wins is the winner.")
 time.sleep(3)
 print()
 name = input('Name: ')
@@ -48,56 +47,47 @@ c_name = input("Computer's name: ")
 # To count the rounds of the game
 count = 1
 
-# Playing 3 rounds
+# Playing rounds
 weapon = ['Rock', 'Paper', 'Scissor']
-for i in range(3):
+num = int(input("How many rounds would you like to play: "))
+for i in range(num):
     u_choice = input(f'{count}. {name}, what do you want to choose? Rock, paper, or scissor? (R,P,S): ')
 
+    # Computer chooses random weapon
     computer = random.choice(weapon)
 
-    rock = 'Rock'
-    paper = 'Paper'
-    scissor = 'Scissor'
-
-    if computer == rock:
+    # Calling result function when the random weapo is chosen
+    if computer == 'Rock':
         results('Rock')
         count += 1
 
-    elif computer == paper:
+    elif computer == 'Paper':
         results('Paper')
         count += 1
 
     else:
-        results(scissor)
+        results('Scissor')
         count += 1
-
+    
+    # Printing what the computer chose
     print(f'{c_name} choose {computer}')
     print()
 
-print(round)
+print(rounds)
 
-# Finding who won at least 2/3 games to determine winner
-# Credit for Line 75: 
-for item in round:
-    u = 'user'
-    c = 'computer'
-    t = 'tie'
-    print(round)
-    #if int(item) in round > 1:
-     #   print(item)
+# Counting number of times a word has been appended in the list
+u = rounds.count('user')
+c = rounds.count('computer')
+t = rounds.count('tie')
 
-most = [item for item, count in collections.Counter(round).items() if count > 1] # Finds duplicate in list
-print()
-
-# Prints out winner's name
-if most == ['user']:
-    print(f'{name} wins!')
-
-elif most == ['computer']:
-    print(f'{c_name} wins!')
-
+# Finding who won the most games to determine winner
+if u > c and t < u:
+    print(f"{name} wins!")
+elif c > u and t < c:
+    print(f"{c_name} wins!")
 else:
-    print('It is a tie!')
+    print("It is a tie!")
 
+# Ending game with respects
 print()
-print('Good Game!')
+print("Good Game!")
